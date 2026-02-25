@@ -1,0 +1,250 @@
+.app {
+  min-height: 100vh;
+  background: #1a1b26;
+  color: #c0caf5;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.header {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #3b4261;
+
+  .title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #7aa2f7;
+  }
+
+  .subtitle {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    color: #a9b1d6;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  padding: 1rem;
+  background: #24283b;
+  border-bottom: 1px solid #3b4261;
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    label {
+      font-size: 0.8rem;
+      color: #a9b1d6;
+    }
+
+    select {
+      min-width: 140px;
+      padding: 0.5rem 0.75rem;
+      background: #1a1b26;
+      border: 1px solid #3b4261;
+      border-radius: 6px;
+      color: #c0caf5;
+      font-size: 0.9rem;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-color: #7aa2f7;
+      }
+    }
+  }
+
+  .btn-search {
+    padding: 0.5rem 1.25rem;
+    background: #7aa2f7;
+    border: none;
+    border-radius: 6px;
+    color: #1a1b26;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: #89b4fa;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.kanban {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  overflow-x: auto;
+  min-height: 400px;
+}
+
+.column {
+  flex: 0 0 280px;
+  min-width: 280px;
+  background: #24283b;
+  border-radius: 8px;
+  border: 1px solid #3b4261;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 220px);
+
+  .column-title {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #7aa2f7;
+    border-bottom: 1px solid #3b4261;
+  }
+
+  .column-hint {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    color: #565f89;
+  }
+
+  .cards {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .empty {
+    margin: 1rem;
+    font-size: 0.85rem;
+    color: #565f89;
+    text-align: center;
+  }
+
+  .btn-load-more {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #3b4261;
+    border: 1px solid #565f89;
+    border-radius: 6px;
+    color: #c0caf5;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: #414868;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.game-card {
+  background: #1a1b26;
+  border-radius: 8px;
+  border: 1px solid #3b4261;
+  overflow: hidden;
+  cursor: grab;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-image-wrap {
+    width: 100%;
+    height: 100px;
+    flex-shrink: 0;
+    background: #3b4261;
+    overflow: hidden;
+  }
+
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-body {
+    flex: 0 0 auto;
+    padding: 0.5rem 0.6rem;
+    background: #24283b;
+    border-top: 1px solid #3b4261;
+    min-height: 0;
+  }
+
+  .card-name {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #c0caf5;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-meta {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.7rem;
+    color: #565f89;
+  }
+}
+
+.cdk-drag-preview {
+  opacity: 0.95;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.cdk-drag-preview .game-card {
+  width: 240px;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms ease;
+}
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #565f89;
+  border-top: 1px solid #3b4261;
+
+  a {
+    color: #7aa2f7;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

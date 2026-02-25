@@ -1,6 +1,16 @@
 # MyGamesFolder
 
+Um board Kanban para organizar jogos usando a API [RAWG](https://rawg.io). Filtre por categoria, ano e estilo, arraste jogos para colunas pessoais e mantenha tudo salvo no navegador.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
+
+## Configurar API key RAWG
+
+1. Crie uma conta em [RAWG](https://rawg.io) e obtenha uma API key em [rawg.io/login/?forward=developer](https://rawg.io/login/?forward=developer).
+2. Copie `src/environments/environment.example.ts` para `src/environments/environment.ts` e para `src/environments/environment.prod.ts` (ou edite os arquivos existentes).
+3. Substitua `YOUR_RAWG_API_KEY` pela sua chave em ambos os arquivos.
+
+Não commite a API key no repositório. O plano gratuito da RAWG permite 20.000 requisições/mês para projetos pessoais.
 
 ## Development server
 
