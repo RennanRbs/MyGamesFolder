@@ -37,7 +37,7 @@
       <h2 class="column-title">Jogos</h2>
       <p class="column-hint">Resultados da busca. Arraste para uma coluna pessoal para salvar.</p>
       <div class="cards">
-        <div class="game-card" *ngFor="let game of allGamesList" cdkDrag [cdkDragData]="game">
+        <div class="game-card" *ngFor="let game of paginatedSearchList" cdkDrag [cdkDragData]="game">
           <div class="card-image-wrap">
             <img class="card-image" [src]="game.background_image || ''" [alt]="game.name" onerror="this.style.display='none'" />
           </div>
@@ -47,6 +47,15 @@
           </div>
         </div>
         <p *ngIf="!loading && allGamesList.length === 0" class="empty">Use os filtros e clique em Buscar.</p>
+        <div *ngIf="allGamesList.length > PAGE_SIZE" class="pagination">
+          <button type="button" class="btn-page" (click)="searchCurrentPage = searchCurrentPage - 1" [disabled]="searchCurrentPage === 1">
+            Anterior
+          </button>
+          <span class="pagination-label">Página {{ searchCurrentPage }} de {{ searchTotalPages }}</span>
+          <button type="button" class="btn-page" (click)="searchCurrentPage = searchCurrentPage + 1" [disabled]="searchCurrentPage >= searchTotalPages">
+            Próxima
+          </button>
+        </div>
         <button *ngIf="hasMoreGames && allGamesList.length > 0" class="btn-load-more" (click)="loadMore()" [disabled]="loadingMore">
           {{ loadingMore ? 'Carregando...' : 'Carregar mais' }}
         </button>
