@@ -31,7 +31,10 @@ export class AppComponent implements OnInit, OnDestroy {
   tags: RawgTag[] = [];
   years: number[] = [];
 
+  readonly PAGE_SIZE = 10;
+
   allGamesList: RawgGame[] = [];
+  searchCurrentPage = 1;
   personalColumns = PERSONAL_COLUMNS;
   columnIds: string[] = [ALL_GAMES_COLUMN_ID, ...PERSONAL_COLUMNS.map(c => c.id)];
 
@@ -87,12 +90,23 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  get paginatedSearchList(): RawgGame[] {
+    const start = (this.searchCurrentPage - 1) * this.PAGE_SIZE;
+    return this.allGamesList.slice(start, start + this.PAGE_SIZE);
+  }
+
+  get searchTotalPages(): number {
+    if (this.allGamesList.length === 0) return 1;
+    return Math.ceil(this.allGamesList.length / this.PAGE_SIZE);
+  }
+
   search(): void {
     this.loading = true;
     this.currentPage = 1;
+    this.searchCurrentPage = 1;
     const params: Record<string, number | string> = {
       page: 1,
-      page_size: 10
+      page_size: 40
     };
     if (this.selectedGenreId !== '') params['genres'] = this.selectedGenreId as number;
     if (this.selectedTagId !== '') params['tags'] = this.selectedTagId as number;
@@ -116,7 +130,7 @@ export class AppComponent implements OnInit, OnDestroy {
   loadMore(): void {
     if (this.loadingMore || !this.hasMoreGames) return;
     this.loadingMore = true;
-    const params = { ...this.lastSearchParams, page: this.currentPage + 1, page_size: 10 };
+    const params = { ...this.lastSearchParams, page: this.currentPage + 1, page_size: 40 };
     this.rawg.getGames(params).pipe(takeUntil(this.destroy$)).subscribe({
       next: res => {
         const games = res.results ?? [];
@@ -136,7 +150,18 @@ export class AppComponent implements OnInit, OnDestroy {
     const game = event.item.data as RawgGame | GameCard;
     const gameId = game.id;
 
-    if (prevId === currId) return;
+    if (prevId === currId) {
+      if (prevId === ALL_GAMES_COLUMN_ID) {
+        const prevIdx = (this.searchCurrentPage - 1) * this.PAGE_SIZE + event.previousIndex;
+        const currIdx = (this.searchCurrentPage - 1) * this.PAGE_SIZE + event.currentIndex;
+        const list = [...this.allGamesList];
+        const [removed] = list.splice(prevIdx, 1);
+        list.splice(currIdx, 0, removed);
+        this.allGamesList = list;
+        this.boardService.setAllGames(list);
+      }
+      return;
+    }
 
     if (prevId === ALL_GAMES_COLUMN_ID && currId !== ALL_GAMES_COLUMN_ID) {
       const card = rawgGameToGameCard(game as RawgGame);

@@ -83,6 +83,7 @@
 
 .kanban {
   display: flex;
+  align-items: flex-start;
   gap: 1rem;
   padding: 1rem;
   overflow-x: auto;
@@ -97,7 +98,6 @@
   border: 1px solid #3b4261;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 220px);
 
   .column-title {
     margin: 0;
@@ -116,12 +116,44 @@
   }
 
   .cards {
-    flex: 1;
-    overflow-y: auto;
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0;
+    padding: 0.25rem 0;
+  }
+
+  .pagination-label {
+    font-size: 0.8rem;
+    color: #a9b1d6;
+  }
+
+  .btn-page {
+    padding: 0.4rem 0.75rem;
+    background: #3b4261;
+    border: 1px solid #565f89;
+    border-radius: 6px;
+    color: #c0caf5;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: #414868;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
   }
 
   .empty {
@@ -153,6 +185,11 @@
 }
 
 .game-card {
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 140px;
   background: #1a1b26;
   border-radius: 8px;
   border: 1px solid #3b4261;
@@ -161,8 +198,6 @@
   transition: box-shadow 0.2s;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  min-width: 0;
 
   &:active {
     cursor: grabbing;
